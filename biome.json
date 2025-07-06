@@ -1,0 +1,31 @@
+{
+	"$schema": "https://biomejs.dev/schemas/2.0.6/schema.json",
+	"files": {
+		"ignoreUnknown": false,
+		"includes": ["app/**", "!build", "!node_modules", "!.react-router"]
+	},
+	"formatter": {
+		"enabled": true,
+		"formatWithErrors": false,
+		"attributePosition": "auto",
+		"indentStyle": "tab",
+		"indentWidth": 2,
+		"lineEnding": "lf"
+	},
+	"javascript": {
+		"formatter": {
+			"arrowParentheses":"always",
+			"bracketSameLine": false,
+			"bracketSpacing": true,
+			"quoteStyle": "single",
+			"quoteProperties": "asNeeded",
+			"semicolons": "always",
+			"trailingCommas": "all"
+		}
+	},
+	"json": {
+		"formatter": {
+			"enabled": false
+		}
+	}
+}
