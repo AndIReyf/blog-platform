@@ -4,7 +4,9 @@
 	themes:
 		light --default,
 		dark --prefersdark,
-		cupcake;
+		caramellatte,
+		abyss,
+		dracula;
 }
 
 @theme {
