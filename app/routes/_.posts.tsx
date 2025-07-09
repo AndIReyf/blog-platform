@@ -1,28 +1,14 @@
 import {Card} from '~/components/shared';
-import {_axios} from "~/lib";
+import {clientAction, clientLoader, loader} from '~/config/routes/posts';
 import type {Route} from './+types/_.posts';
 
-interface IPostSchema {
-	id: string;
-	title: string;
-	shortDescription: string;
-	content: string;
-	blogId: string;
-	blogName: string;
-	createdAt: string;
-}
+export { loader, clientLoader, clientAction };
 
 export function meta() {
 	return [
 		{ title: 'Posts' },
 		{ name: 'description', content: 'Welcome to Posts page!' },
 	];
-}
-
-export async function loader() {
-	const { data } = await _axios.get<IPostSchema[]>('/posts');
-
-	return data;
 }
 
 export default function Posts({ loaderData }: Route.ComponentProps) {

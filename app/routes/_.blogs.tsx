@@ -1,27 +1,14 @@
 import {CardList} from '~/components/shared';
-import {_axios} from "~/lib";
+import {clientAction, clientLoader, loader} from '~/config/routes/blogs';
 import type {Route} from './+types/_.blogs';
 
-interface IBlogSchema {
-	id: string;
-	createdAt: string;
-	isMembership: boolean;
-	name: string;
-	description: string;
-	websiteUrl: string;
-}
+export { loader, clientLoader, clientAction };
 
 export function meta() {
 	return [
 		{ title: 'Blogs' },
 		{ name: 'description', content: 'Welcome to Blogs page!' },
 	];
-}
-
-export async function loader() {
-	const { data } = await _axios.get<IBlogSchema[]>('/blogs');
-
-	return data;
 }
 
 export default function Blogs({ loaderData }: Route.ComponentProps) {
