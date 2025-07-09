@@ -19,10 +19,11 @@ export default function Main() {
 			<div className="h-[100dvh] grid grid-cols-[200px_1fr] overflow-hidden">
 				<Sidebar />
 				<main className="px-6 py-7.5 overflow-y-auto bg-base-300 relative">
-					{isNavigating && (
+					{isNavigating ? (
 						<Loader classNameStyles="loading-ring w-50 absolute top-[50%] left-[50%] transform-[translate(-50%,_-50%)]" />
+					) : (
+						<Outlet />
 					)}
-					<Outlet />
 				</main>
 			</div>
 		</div>

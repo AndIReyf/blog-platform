@@ -1,3 +1,4 @@
+export { _axios } from './api/axios/api';
 export { AVATARS } from './constants/avatars';
 export { IMAGES } from './constants/images';
 export { useRandomImg } from './hooks/useRandomImg';
