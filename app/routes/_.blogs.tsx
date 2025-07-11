@@ -1,4 +1,5 @@
 import {href, useNavigate} from "react-router";
+import {Search, Sorting} from "~/components/features";
 import {CardList, Divider} from '~/components/shared';
 import {clientAction, clientLoader, loader} from '~/config/routes/blogs';
 import type {Route} from './+types/_.blogs';
@@ -23,6 +24,10 @@ export default function Blogs({ loaderData }: Route.ComponentProps) {
 		<section>
 			<h1 className="font-black text-2xl">Blogs</h1>
 			<Divider />
+			<div className="grid  grid-cols-[auto_250px] gap-2 mb-4">
+				<Search />
+				<Sorting />
+			</div>
 			<div className="flex flex-col gap-4 mb-[150px]">
 				{loaderData.map(({ id, name, description, websiteUrl }) => (
 					<CardList
