@@ -1,15 +1,7 @@
 import {_axios, createCache, genericClientAction, genericClientLoader,} from '~/lib';
+import type {IBlogSchema} from '~/types/blogs';
 import {ROUTES} from '~/types/routes';
 import type {Route} from '.react-router/types/app/routes/+types/_.blogs';
-
-interface IBlogSchema {
-	id: string;
-	createdAt: string;
-	isMembership: boolean;
-	name: string;
-	description: string;
-	websiteUrl: string;
-}
 
 const cache = createCache<IBlogSchema[]>();
 const isInitialRequest = { current: true };

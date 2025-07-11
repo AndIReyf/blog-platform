@@ -1,4 +1,5 @@
-import {CardList} from '~/components/shared';
+import {href, useNavigate} from "react-router";
+import {CardList, Divider} from '~/components/shared';
 import {clientAction, clientLoader, loader} from '~/config/routes/blogs';
 import type {Route} from './+types/_.blogs';
 
@@ -12,10 +13,16 @@ export function meta() {
 }
 
 export default function Blogs({ loaderData }: Route.ComponentProps) {
+	const navigate = useNavigate();
+
+	const onClickRedirectToBlog = (id: string): void => {
+		navigate(href('/blogs/:id', { id }));
+	};
+
 	return (
 		<section>
 			<h1 className="font-black text-2xl">Blogs</h1>
-			<div className="divider mt-1.5 mb-5 p-0 h-0" />
+			<Divider />
 			<div className="flex flex-col gap-4 mb-[150px]">
 				{loaderData.map(({ id, name, description, websiteUrl }) => (
 					<CardList
@@ -23,6 +30,8 @@ export default function Blogs({ loaderData }: Route.ComponentProps) {
 						title={name}
 						description={description}
 						webURL={websiteUrl}
+						onClick={() => onClickRedirectToBlog(id)}
+						withShadow
 					/>
 				))}
 			</div>

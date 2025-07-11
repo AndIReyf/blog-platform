@@ -1,13 +1,13 @@
 import {SunMoon} from 'lucide-react';
 import {Tooltip} from '~/components/shared';
+import {useTheme} from '~/lib';
 
 interface IThemeSwitcherProps {
 	tooltipText?: string;
-	onClick: VoidFunction;
 }
 
-export const ThemeSwitcher = (props: IThemeSwitcherProps) => {
-	const { tooltipText, onClick } = props;
+export const ThemeSwitcher = ({ tooltipText }: IThemeSwitcherProps) => {
+	const { nextTheme } = useTheme();
 
 	return (
 		<Tooltip text={tooltipText || 'Switch your Theme!'}>
@@ -15,7 +15,7 @@ export const ThemeSwitcher = (props: IThemeSwitcherProps) => {
 				type="button"
 				className="btn btn-lg btn-accent btn-circle"
 				aria-label="Toggle theme"
-				onClick={onClick}
+				onClick={nextTheme}
 			>
 				<SunMoon size="25" strokeWidth={'1.5'} />
 			</button>

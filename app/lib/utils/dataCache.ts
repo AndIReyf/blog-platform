@@ -1,15 +1,3 @@
-interface IGenericClientActionProps<T> {
-	request: Request;
-	cache: ReturnType<typeof createCache<T>>;
-}
-
-interface IGenericClientLoaderProps<T> {
-	request: Request;
-	serverLoader: () => Promise<T>;
-	cache: ReturnType<typeof createCache<T>>;
-	isInitialRequest: { current: boolean };
-}
-
 export function generateKey(request: Request): string {
 	return `${request.method}:${request.url}`;
 }
@@ -23,6 +11,13 @@ export function createCache<T>() {
 		delete: (key: string) => cache.delete(key),
 		clear: () => cache.clear(),
 	};
+}
+
+interface IGenericClientLoaderProps<T> {
+	request: Request;
+	serverLoader: () => Promise<T>;
+	cache: ReturnType<typeof createCache<T>>;
+	isInitialRequest: { current: boolean };
 }
 
 export async function genericClientLoader<T>({
@@ -48,6 +43,11 @@ export async function genericClientLoader<T>({
 	const serverData = await serverLoader();
 	cache.set(cacheKey, serverData);
 	return serverData;
+}
+
+interface IGenericClientActionProps<T> {
+	request: Request;
+	cache: ReturnType<typeof createCache<T>>;
 }
 
 export async function genericClientAction<T>({

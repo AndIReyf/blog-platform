@@ -1,16 +1,7 @@
 import {_axios, createCache, genericClientAction, genericClientLoader,} from '~/lib';
+import type {IPostSchema} from '~/types/posts';
 import {ROUTES} from '~/types/routes';
 import type {Route} from '.react-router/types/app/routes/+types/_.posts';
-
-interface IPostSchema {
-	id: string;
-	title: string;
-	shortDescription: string;
-	content: string;
-	blogId: string;
-	blogName: string;
-	createdAt: string;
-}
 
 const cache = createCache<IPostSchema[]>();
 const isInitialRequest = { current: true };

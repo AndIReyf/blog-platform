@@ -1,7 +1,9 @@
+import {Link} from 'react-router';
 import {AVATARS, formatDateLocale, IMAGES, useRandomImg} from '~/lib';
 
 interface ICardProps {
 	title: string;
+	to: string;
 	subtitle?: string;
 	imgUrl?: string;
 	createdAt?: string;
@@ -12,6 +14,7 @@ export const Card = (props: ICardProps) => {
 	const randomAvatar = useRandomImg(AVATARS);
 	const randomImg = useRandomImg(IMAGES);
 	const {
+		to,
 		title,
 		subtitle,
 		createdAt,
@@ -20,13 +23,15 @@ export const Card = (props: ICardProps) => {
 	} = props;
 
 	return (
-		<div className="card bg-base-100 w-105 h-80 shadow-lg">
+		<div className="card bg-base-100 w-95 h-80 shadow-lg">
 			<figure className="h-50">
-				<img
-					className="w-full h-full object-cover"
-					src={imgUrl}
-					alt="Card img here"
-				/>
+				<Link to={to} className="w-full h-full">
+					<img
+						className="w-full h-full object-cover"
+						src={imgUrl}
+						alt="Card img here"
+					/>
+				</Link>
 			</figure>
 			<div className="card-body flex-row">
 				<div className="avatar block">
@@ -35,7 +40,7 @@ export const Card = (props: ICardProps) => {
 					</div>
 				</div>
 				<div>
-					<h3 className="card-title inline-block w-[320px] truncate">
+					<h3 className="card-title inline-block w-[300px] truncate">
 						{title}
 					</h3>
 					{subtitle && (

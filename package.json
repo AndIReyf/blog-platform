@@ -10,7 +10,9 @@
     "lint:start": "eslint",
     "lint:fix": "eslint --fix",
     "biome": "biome format --write ./app/*",
-    "husky": "husky"
+    "husky": "husky",
+    "test": "vitest",
+    "coverage": "vitest run --coverage"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
@@ -40,6 +42,7 @@
     "@types/node": "^20",
     "@types/react": "^19.1.2",
     "@types/react-dom": "^19.1.2",
+    "@vitest/coverage-v8": "3.2.4",
     "axios": "^1.10.0",
     "daisyui": "^5.0.43",
     "eslint": "^9.30.1",
@@ -53,6 +56,7 @@
     "typescript": "^5.8.3",
     "typescript-eslint": "^8.35.1",
     "vite": "^6.3.3",
-    "vite-tsconfig-paths": "^5.1.4"
+    "vite-tsconfig-paths": "^5.1.4",
+    "vitest": "^3.2.4"
   }
 }
