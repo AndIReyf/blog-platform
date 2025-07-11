@@ -27,10 +27,10 @@ export async function genericClientLoader<T>({
 	cache,
 }: IGenericClientLoaderProps<T>) {
 	const cacheKey = generateKey(request);
+	const serverData = await serverLoader();
 
 	if (isInitialRequest.current) {
 		isInitialRequest.current = false;
-		const serverData = await serverLoader();
 		cache.set(cacheKey, serverData);
 		return serverData;
 	}
@@ -40,7 +40,6 @@ export async function genericClientLoader<T>({
 		return cachedData;
 	}
 
-	const serverData = await serverLoader();
 	cache.set(cacheKey, serverData);
 	return serverData;
 }

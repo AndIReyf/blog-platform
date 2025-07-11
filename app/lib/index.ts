@@ -10,3 +10,4 @@ export {
 	genericClientLoader,
 } from './utils/dataCache';
 export { formatDateLocale } from './utils/date';
+export { sortItems } from './utils/sort';
