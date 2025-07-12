@@ -19,7 +19,7 @@ export const NotFound = ({ message, stack, details }: INotFoundProps) => {
 	};
 
 	return (
-		<div className="flex flex-col justify-center items-center gap-4">
+		<div className="flex flex-col justify-center items-center gap-4 w-full">
 			<h1 className="flex items-center gap-2">
 				<Ban className="text-error" />
 				<span className="text-4xl font-bold">{message}</span>

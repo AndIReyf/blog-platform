@@ -1,4 +1,4 @@
-import {href, redirect, useNavigate} from 'react-router';
+import {href, useNavigate} from 'react-router';
 import {BlogCard} from '~/components/entities';
 import {Breadcrumbs, Divider, GoBack} from '~/components/shared';
 import {_axios} from '~/lib';
@@ -17,7 +17,7 @@ export async function loader({ params }: Route.LoaderArgs) {
 
 		return data;
 	} catch (error) {
-		throw redirect(href('/blogs'));
+		throw new Error(`Blog with ID ${params.id} not found`);
 	}
 }
 

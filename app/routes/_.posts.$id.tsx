@@ -1,5 +1,5 @@
 import {Image} from 'lucide-react';
-import {href, Link, redirect, useNavigate} from 'react-router';
+import {href, Link, useNavigate} from 'react-router';
 import {PostCard} from '~/components/entities';
 import {Breadcrumbs, Divider, GoBack} from '~/components/shared';
 import {_axios} from '~/lib';
@@ -18,7 +18,7 @@ export async function loader({ params }: Route.LoaderArgs) {
 
 		return data;
 	} catch (error) {
-		throw redirect(href('/posts'));
+		throw new Error(`Post with ID ${params.id} not found`);
 	}
 }
 
