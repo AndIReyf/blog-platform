@@ -1,4 +1,5 @@
 import {isRouteErrorResponse, Links, Meta, Outlet, Scripts, ScrollRestoration,} from 'react-router';
+import {NotFound} from "~/components/pages";
 
 import type {Route} from './+types/root';
 import './styles/globals.css';
@@ -55,14 +56,8 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
 	}
 
 	return (
-		<main className="pt-16 p-4 container mx-auto">
-			<h1>{message}</h1>
-			<p>{details}</p>
-			{stack && (
-				<pre className="w-full p-4 overflow-x-auto">
-					<code>{stack}</code>
-				</pre>
-			)}
+		<main className="p-4 container mx-auto h-[100dvh] flex flex-col justify-center items-center">
+			<NotFound message={message} details={details} stack={stack} />
 		</main>
 	);
 }

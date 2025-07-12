@@ -9,7 +9,7 @@ const isInitialRequest = { current: true };
 export async function loader() {
 	const { data } = await _axios.get<IBlogSchema[]>(ROUTES.blogs);
 
-	return data;
+	return data.reverse();
 }
 
 // export async function action({ request }: Route.ActionArgs) {

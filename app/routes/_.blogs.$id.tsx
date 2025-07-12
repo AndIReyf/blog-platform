@@ -1,4 +1,4 @@
-import {href, useNavigate} from 'react-router';
+import {href, redirect, useNavigate} from 'react-router';
 import {BlogCard} from '~/components/entities';
 import {Breadcrumbs, Divider, GoBack} from '~/components/shared';
 import {_axios} from '~/lib';
@@ -10,11 +10,15 @@ export function meta() {
 }
 
 export async function loader({ params }: Route.LoaderArgs) {
-	const { data } = await _axios.get<IBlogSchema>(
-		href('/blogs/:id', { id: params.id }),
-	);
+	try {
+		const { data } = await _axios.get<IBlogSchema>(
+			href('/blogs/:id', { id: params.id }),
+		);
 
-	return data;
+		return data;
+	} catch (error) {
+		throw redirect(href('/blogs'));
+	}
 }
 
 export default function Blog({ loaderData }: Route.ComponentProps) {

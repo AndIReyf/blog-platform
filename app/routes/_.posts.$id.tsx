@@ -1,5 +1,5 @@
 import {Image} from 'lucide-react';
-import {href, Link, useNavigate} from 'react-router';
+import {href, Link, redirect, useNavigate} from 'react-router';
 import {PostCard} from '~/components/entities';
 import {Breadcrumbs, Divider, GoBack} from '~/components/shared';
 import {_axios} from '~/lib';
@@ -11,15 +11,16 @@ export function meta() {
 }
 
 export async function loader({ params }: Route.LoaderArgs) {
-	const { data } = await _axios.get<IPostSchema>(
-		href('/posts/:id', { id: params.id }),
-	);
+	try {
+		const { data } = await _axios.get<IPostSchema>(
+			href('/posts/:id', { id: params.id }),
+		);
 
-	return data;
+		return data;
+	} catch (error) {
+		throw redirect(href('/posts'));
+	}
 }
-
-// ToDo: This is the id of the first blog. Remove after the real id is added.
-const MOCKED_BLOG_ID = '2025-07-01T18:22:41.160Z';
 
 export default function Post({ loaderData }: Route.ComponentProps) {
 	const { title, content, id, createdAt, shortDescription, blogId, blogName } =
@@ -44,7 +45,7 @@ export default function Post({ loaderData }: Route.ComponentProps) {
 				</div>
 				<Link
 					className="text-secondary"
-					to={href('/blogs/:id', { id: MOCKED_BLOG_ID })}
+					to={href('/blogs/:id', { id: blogId })}
 				>
 					{blogName}
 				</Link>
