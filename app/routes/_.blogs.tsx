@@ -1,10 +1,11 @@
+import {CirclePlus} from "lucide-react";
 import {useState} from 'react';
-import {href, useNavigate} from 'react-router';
+import {href, Link, useNavigate} from 'react-router';
 import {options, Search, Sorting} from '~/components/features';
 import type {SortOptions} from '~/components/features/Sorting/Sorting';
 import {Banner, CardList, Divider} from '~/components/shared';
 import {clientAction, clientLoader, loader} from '~/config/routes/blogs';
-import {sortItems} from '~/lib';
+import {configApp, sortItems} from '~/lib';
 import type {Route} from './+types/_.blogs';
 
 export { loader, clientLoader, clientAction };
@@ -46,6 +47,8 @@ export default function Blogs({ loaderData }: Route.ComponentProps) {
 		undefined,
 	);
 
+	const { isAuth } = configApp();
+
 	const onClickRedirectToBlog = (id: string): void => {
 		navigate(href('/blogs/:id', { id }));
 	};
@@ -71,6 +74,12 @@ export default function Blogs({ loaderData }: Route.ComponentProps) {
 					sortingOptions={blogSortingOptionsConfig}
 				/>
 			</div>
+			{isAuth && (
+				<Link to="/" className="inline-flex gap-2 mb-4 text-secondary">
+					<span>Create Blog</span>
+					<CirclePlus />
+				</Link>
+			)}
 			<div className="flex flex-col gap-4 mb-[150px]">
 				{loaderData.length ? (
 					sortedBlogs.map(({ id, name, description, websiteUrl }) => (
