@@ -55,4 +55,5 @@ export async function genericClientAction<T>({
 }: IGenericClientActionProps<T>) {
 	const cacheKey = generateKey(request);
 	cache.delete(cacheKey);
+	cache.clear();
 }

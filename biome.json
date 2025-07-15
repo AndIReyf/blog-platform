@@ -1,5 +1,12 @@
 {
 	"$schema": "https://biomejs.dev/schemas/2.0.6/schema.json",
+	"linter": {
+		"rules": {
+			"a11y": {
+				"useKeyWithClickEvents": "off"
+			}
+		}
+	},
 	"files": {
 		"ignoreUnknown": false,
 		"includes": ["app/**", "!build", "!node_modules", "!.react-router"]

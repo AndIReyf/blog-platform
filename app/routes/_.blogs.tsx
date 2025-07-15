@@ -1,14 +1,15 @@
-import {CirclePlus} from "lucide-react";
+import {CirclePlus} from 'lucide-react';
 import {useState} from 'react';
-import {href, Link, useNavigate} from 'react-router';
+import {href, useNavigate} from 'react-router';
+import {BlogCreation} from '~/components/entities';
 import {options, Search, Sorting} from '~/components/features';
 import type {SortOptions} from '~/components/features/Sorting/Sorting';
 import {Banner, CardList, Divider} from '~/components/shared';
-import {clientAction, clientLoader, loader} from '~/config/routes/blogs';
-import {configApp, sortItems} from '~/lib';
+import {action, clientAction, clientLoader, loader,} from '~/config/routes/blogs';
+import {configApp, MODAL_ID, sortItems} from '~/lib';
 import type {Route} from './+types/_.blogs';
 
-export { loader, clientLoader, clientAction };
+export { loader, clientLoader, clientAction, action };
 
 export function meta() {
 	return [
@@ -75,10 +76,13 @@ export default function Blogs({ loaderData }: Route.ComponentProps) {
 				/>
 			</div>
 			{isAuth && (
-				<Link to="/" className="inline-flex gap-2 mb-4 text-secondary">
+				<label
+					htmlFor={MODAL_ID.createEntities}
+					className="link inline-flex gap-2 mb-4 text-primary"
+				>
 					<span>Create Blog</span>
 					<CirclePlus />
-				</Link>
+				</label>
 			)}
 			<div className="flex flex-col gap-4 mb-[150px]">
 				{loaderData.length ? (
@@ -89,6 +93,7 @@ export default function Blogs({ loaderData }: Route.ComponentProps) {
 							description={description}
 							webURL={websiteUrl}
 							onClick={() => onClickRedirectToBlog(id)}
+							withDropdown={isAuth}
 							withShadow
 						/>
 					))
@@ -96,6 +101,7 @@ export default function Blogs({ loaderData }: Route.ComponentProps) {
 					<Banner title="There are no blogs!" />
 				)}
 			</div>
+			<BlogCreation id={MODAL_ID.createEntities} />
 		</section>
 	);
 }

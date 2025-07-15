@@ -10,8 +10,8 @@ export const _axios = axios.create({
 	},
 });
 
-_axios.interceptors.request.use((config) => {
-	console.log('�� Request Headers:', config.headers);
-	console.log('🔐 Authorization Header:', config.headers.authorization);
-	return config;
-});
+// _axios.interceptors.request.use((config) => {
+// 	console.log('�� Request Headers:', config.headers);
+// 	console.log('🔐 Authorization Header:', config.headers.authorization);
+// 	return config;
+// });

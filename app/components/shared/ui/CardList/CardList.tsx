@@ -1,4 +1,5 @@
 import {Link} from 'react-router';
+import {Dropdown} from '~/components/shared';
 import {AVATARS, formatDateLocale, useRandomImg} from '~/lib';
 
 interface ICardListProps {
@@ -8,6 +9,7 @@ interface ICardListProps {
 	webURL?: string;
 	avatarUrl?: string;
 	withShadow?: boolean;
+	withDropdown?: boolean;
 	isTextExpanded?: boolean;
 	createdAt?: string;
 	createdAtLabel?: string;
@@ -27,6 +29,7 @@ export const CardList = (props: ICardListProps) => {
 		createdAt,
 		createdAtLabel = 'Created',
 		isTextExpanded,
+		withDropdown,
 	} = props;
 
 	return (
@@ -41,7 +44,12 @@ export const CardList = (props: ICardListProps) => {
 						/>
 					</figure>
 				</div>
-				<div className="w-[100%] flex flex-col">
+				<div className="w-[100%] flex flex-col relative">
+					{withDropdown && (
+						<div className="absolute top-0 right-0">
+							<Dropdown />
+						</div>
+					)}
 					<h2 className="w-[200px] truncate font-semibold text-2xl">{title}</h2>
 					{createdAt && (
 						<div className="flex gap-2">
