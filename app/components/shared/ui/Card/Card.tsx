@@ -1,26 +1,45 @@
+import {SquarePen, Trash2} from 'lucide-react';
 import {Link} from 'react-router';
-import {AVATARS, formatDateLocale, IMAGES, useRandomImg} from '~/lib';
+import {Dropdown, type IDropdownItems} from '~/components/shared';
+import {AVATARS, formatDateLocale, IMAGES, MODAL_ID, useRandomImg,} from '~/lib';
 
 interface ICardProps {
+	id: string;
 	title: string;
 	to: string;
 	subtitle?: string;
 	imgUrl?: string;
 	createdAt?: string;
 	avatar?: string;
+	withDropdown?: boolean;
 }
 
 export const Card = (props: ICardProps) => {
 	const randomAvatar = useRandomImg(AVATARS);
 	const randomImg = useRandomImg(IMAGES);
 	const {
+		id,
 		to,
 		title,
 		subtitle,
 		createdAt,
+		withDropdown,
 		imgUrl = randomImg,
 		avatar = randomAvatar,
 	} = props;
+
+	const dropdownItems: IDropdownItems[] = [
+		{
+			icon: <SquarePen size={14} />,
+			label: 'Modify',
+			htmlFor: id,
+		},
+		{
+			icon: <Trash2 size={14} />,
+			label: 'Delete',
+			htmlFor: MODAL_ID.deletePost + id,
+		},
+	];
 
 	return (
 		<div className="card bg-base-100 w-95 h-80 shadow-lg">
@@ -33,7 +52,12 @@ export const Card = (props: ICardProps) => {
 					/>
 				</Link>
 			</figure>
-			<div className="card-body flex-row">
+			<div className="card-body flex-row relative">
+				{withDropdown && (
+					<div className="absolute top-[20px] right-[15px]">
+						<Dropdown dropdownItems={dropdownItems} />
+					</div>
+				)}
 				<div className="avatar block">
 					<div className="w-12 rounded-full">
 						<img src={avatar} alt="Avatar" />

@@ -1,8 +1,9 @@
 import {Image} from 'lucide-react';
-import {href, Link, useNavigate} from 'react-router';
+import {href, Link, redirect, useNavigate} from 'react-router';
 import {PostCard} from '~/components/entities';
 import {Breadcrumbs, Divider, GoBack} from '~/components/shared';
-import {_axios} from '~/lib';
+import {postCache} from "~/config/routes/posts";
+import {_axios, genericClientAction} from '~/lib';
 import type {IPostSchema} from '~/types/posts';
 import type {Route} from './+types/_.posts.$id';
 
@@ -22,9 +23,47 @@ export async function loader({ params }: Route.LoaderArgs) {
 	}
 }
 
+export async function action({ request, params }: Route.ActionArgs) {
+	if (request.method === 'DELETE') {
+		await _axios.delete(href('/posts/:id', { id: params.id }));
+
+		postCache.clear();
+	}
+
+	if (request.method === 'PUT') {
+		const formData = await request.formData();
+		const title = formData.get('title');
+		const shortDescription = formData.get('shortDescription');
+		const content = formData.get('content');
+		const blogId = formData.get('blogId');
+		const blogName = formData.get('blogName');
+
+		await _axios.put<IPostSchema>(href('/posts/:id', { id: params.id }), {
+			title,
+			shortDescription,
+			content,
+			blogId,
+			blogName,
+		});
+
+		postCache.clear();
+	}
+
+	return redirect(href('/posts'));
+}
+
+export async function clientAction({
+	request,
+	serverAction,
+}: Route.ClientActionArgs) {
+	await genericClientAction<IPostSchema[]>({ request, cache: postCache });
+
+	const serverData = await serverAction();
+	return serverData;
+}
+
 export default function Post({ loaderData }: Route.ComponentProps) {
-	const { title, content, id, createdAt, shortDescription, blogId, blogName } =
-		loaderData;
+	const { title, content, createdAt, blogId, blogName } = loaderData;
 
 	const navigate = useNavigate();
 

@@ -14,4 +14,4 @@ export {
 } from './utils/dataCache';
 export { formatDateLocale } from './utils/date';
 export { sortItems } from './utils/sort';
-export { blogSchema } from './validation/validation';
+export { blogSchema, postSchema } from './validation/validation';
