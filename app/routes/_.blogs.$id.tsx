@@ -1,7 +1,8 @@
-import {href, useNavigate} from 'react-router';
+import {href, redirect, useNavigate} from 'react-router';
 import {BlogCard} from '~/components/entities';
 import {Breadcrumbs, Divider, GoBack} from '~/components/shared';
-import {_axios} from '~/lib';
+import {blogsCache} from "~/config/routes/blogs";
+import {_axios, genericClientAction} from '~/lib';
 import type {IBlogSchema} from '~/types/blogs';
 import type {Route} from './+types/_.blogs.$id';
 
@@ -19,6 +20,41 @@ export async function loader({ params }: Route.LoaderArgs) {
 	} catch (error) {
 		throw new Error(`Blog with ID ${params.id} not found`);
 	}
+}
+
+export async function action({ request, params }: Route.ActionArgs) {
+	if (request.method === 'DELETE') {
+		await _axios.delete(href('/blogs/:id', { id: params.id }));
+
+		blogsCache.clear();
+	}
+
+	if (request.method === 'PUT') {
+		const formData = await request.formData();
+		const name = formData.get('name');
+		const websiteUrl = formData.get('websiteUrl');
+		const description = formData.get('description');
+
+		await _axios.put<IBlogSchema>(href('/blogs/:id', { id: params.id }), {
+			name,
+			websiteUrl,
+			description,
+		});
+
+		blogsCache.clear();
+	}
+
+	return redirect(href('/blogs'));
+}
+
+export async function clientAction({
+	request,
+	serverAction,
+}: Route.ClientActionArgs) {
+	await genericClientAction<IBlogSchema[]>({ request, cache: blogsCache });
+
+	const serverData = await serverAction();
+	return serverData;
 }
 
 export default function Blog({ loaderData }: Route.ComponentProps) {

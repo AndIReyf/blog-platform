@@ -1,3 +1,3 @@
+export { CreateUpdateBlogModal } from '~/components/entities/CreateUpdateBlogModal/CreateUpdateBlogModal';
 export { BlogCard } from './BlogCard/BlogCard';
-export { BlogCreation } from './BlogCreation/BlogCreation';
 export { PostCard } from './PostCard/PostCard';

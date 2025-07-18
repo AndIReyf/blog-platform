@@ -1,8 +1,10 @@
+import {SquarePen, Trash2} from 'lucide-react';
 import {Link} from 'react-router';
-import {Dropdown} from '~/components/shared';
-import {AVATARS, formatDateLocale, useRandomImg} from '~/lib';
+import {Dropdown, type IDropdownItems} from '~/components/shared';
+import {AVATARS, formatDateLocale, MODAL_ID, useRandomImg} from '~/lib';
 
 interface ICardListProps {
+	id: string;
 	title: string;
 	description: string;
 	btnLabel?: string;
@@ -20,6 +22,7 @@ export const CardList = (props: ICardListProps) => {
 	const randomAvatar = useRandomImg(AVATARS);
 	const {
 		onClick,
+		id,
 		title,
 		description,
 		avatarUrl = randomAvatar,
@@ -31,6 +34,19 @@ export const CardList = (props: ICardListProps) => {
 		isTextExpanded,
 		withDropdown,
 	} = props;
+
+	const dropdownItems: IDropdownItems[] = [
+		{
+			icon: <SquarePen size={14} />,
+			label: 'Modify',
+			htmlFor: id,
+		},
+		{
+			icon: <Trash2 size={14} />,
+			label: 'Delete',
+			htmlFor: MODAL_ID.deleteBlog + id,
+		},
+	];
 
 	return (
 		<div className={`card bg-base-100 ${withShadow ? 'shadow-sm' : ''}`}>
@@ -47,7 +63,7 @@ export const CardList = (props: ICardListProps) => {
 				<div className="w-[100%] flex flex-col relative">
 					{withDropdown && (
 						<div className="absolute top-0 right-0">
-							<Dropdown />
+							<Dropdown dropdownItems={dropdownItems} />
 						</div>
 					)}
 					<h2 className="w-[200px] truncate font-semibold text-2xl">{title}</h2>

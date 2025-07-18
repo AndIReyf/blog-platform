@@ -3,7 +3,7 @@ import {_axios, createCache, genericClientAction, genericClientLoader,} from '~/
 import type {IBlogSchema} from '~/types/blogs';
 import type {Route} from '.react-router/types/app/routes/+types/_.blogs';
 
-const cache = createCache<IBlogSchema[]>();
+export const blogsCache = createCache<IBlogSchema[]>();
 const isInitialRequest = { current: true };
 
 export async function loader() {
@@ -25,7 +25,7 @@ export async function action({ request }: Route.ActionArgs) {
 	});
 
 	isInitialRequest.current = true;
-	cache.clear();
+	blogsCache.clear();
 
 	return redirect(href('/blogs'));
 }
@@ -38,7 +38,7 @@ export async function clientLoader({
 		request,
 		serverLoader,
 		isInitialRequest,
-		cache,
+		cache: blogsCache,
 	});
 
 	return clientData;
@@ -50,7 +50,7 @@ export async function clientAction({
 	request,
 	serverAction,
 }: Route.ClientActionArgs) {
-	await genericClientAction<IBlogSchema[]>({ request, cache });
+	await genericClientAction<IBlogSchema[]>({ request, cache: blogsCache });
 
 	const serverData = await serverAction();
 	return serverData;
